@@ -1,3 +1,4 @@
+//discord.js stuff
 const { Client, GatewayIntentBits, Partials } = require("discord.js");
 const { Guilds, GuildMessages, GuildMessageReactions, MessageContent } =
   GatewayIntentBits;
@@ -8,6 +9,20 @@ const client = new Client({
   allowedMentions: { parse: ["users"] },
 });
 
-require("dotenv");
+//event Handler
+const eventHandler = require("./src/Handler/eventHandler");
+eventHandler(client)
 
-client.login(process.env.DISCORD_TOKEN);
+
+//get the token
+require("dotenv").config();
+const token = process.env.TOKEN;
+
+//throw an error if the token does not exist.
+if (!process.env.TOKEN) {
+  throw new Error("Token not found in .env file");
+}
+
+
+//Login
+client.login(token);
